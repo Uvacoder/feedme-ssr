@@ -13,10 +13,10 @@
   export let buttonStyle = 'text';
 
   export let title = '';
-  export let iconName;
-  export let href;
+  export let iconName = '';
+  export let href = '';
   export let order = 'reversed';
-  export let image;
+  export let image = '';
 
 </script>
 
