@@ -13,7 +13,6 @@ const parser = new Parser();
 const getAllFeedsPosts = async (feedArray) => {
   
   const allFeedsPromise = feedArray.map(async(feedItem) => {
-    console.log(feedItem.feed_link)
     return await parser.parseURL(feedItem.feed_link);
   });
   

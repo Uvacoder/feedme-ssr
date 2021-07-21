@@ -20,7 +20,7 @@
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
     if(error) {
-      console.log(error);
+      console.error(error);
     } else {
       $authed = false;
     }
@@ -28,7 +28,6 @@
   }
 
   onMount(() => {
-    console.log('path in onMount: ', $page.path);
     if($page.path !== '/') {
       name = getFeedName();
     }
