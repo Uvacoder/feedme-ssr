@@ -1,5 +1,6 @@
 <script>
   import { fade } from 'svelte/transition';
+  import {format} from 'timeago.js';
   import PostContent from './PostContent.svelte';
   import Icon from './Icon.svelte';
   export let post;
@@ -40,7 +41,7 @@
         </h2>
       </div>
       <div class="post-info">
-        <div class="post-meta"><a href="{post.feedLink || ''}" tabindex="-1">{post.feedTitle || ''}</a>: <time>{new Date(post.pubDate).toLocaleDateString()}</time></div>
+        <div class="post-meta"><a href="{post.feedLink || ''}" tabindex="-1">{post.feedTitle || ''}</a>: <time>{format(new Date(post.pubDate))}</time></div>
       </div>
     </div>
   </div>
