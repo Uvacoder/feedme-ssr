@@ -17,7 +17,13 @@
     </li>
     {#each Object.values($feeds) as feed}
       <li class="sidebar-menu-item">
-        <Button buttonType="link" prefetch="true" buttonStyle={feed.image ? 'imageText' : 'text'} image={feed.image ? feed.image : ''} href="/feeds/{feed.slug}" title={feed.name} /> 
+        <Button 
+          buttonType="link"
+          prefetch="true" 
+          buttonStyle={feed.image ? 'imageText' : 'iconText'}
+          iconName="rss"
+          image={feed.image ? feed.image : ''} 
+          href="/feeds/{feed.slug}" title={feed.name} /> 
       </li>
     {/each}
   </ul>
