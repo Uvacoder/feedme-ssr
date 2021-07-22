@@ -21,7 +21,7 @@ const getAllFeedsPosts = async (feedArray) => {
   const feedsData = await Promise.allSettled(allFeedsPromise);
   
   return feedsData.map((settledFeed) => {
-    settledFeed.value.feed.title = settledFeed.value.name;
+    settledFeed.value.feed.title = settledFeed.value.name || settledFeed.value.feed.title;
     return settledFeed.value.feed;
   });
 }
