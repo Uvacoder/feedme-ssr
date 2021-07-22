@@ -9,15 +9,15 @@
 
   <ul class="sidebar-menu">
     <li class="sidebar-menu-item">
-      <Button buttonType="link" buttonStyle="iconText" iconName="listSettings" href="/settings" title="Customize Feeds" />
+      <Button buttonType="link" prefetch="true" buttonStyle="iconText" iconName="listSettings" href="/settings" title="Customize Feeds" />
     </li>
 
     <li class="sidebar-menu-item">
-      <Button buttonType="link" buttonStyle="iconText" iconName="feed" href="/" title="All Posts" /> 
+      <Button buttonType="link" prefetch="true" buttonStyle="iconText" iconName="feed" href="/" title="All Posts" /> 
     </li>
     {#each Object.values($feeds) as feed}
       <li class="sidebar-menu-item">
-        <Button buttonType="link" buttonStyle={feed.image ? 'imageText' : 'text'} image={feed.image ? feed.image : ''} href="/feeds/{feed.slug}" title={feed.name} /> 
+        <Button buttonType="link" prefetch="true" buttonStyle={feed.image ? 'imageText' : 'text'} image={feed.image ? feed.image : ''} href="/feeds/{feed.slug}" title={feed.name} /> 
       </li>
     {/each}
   </ul>

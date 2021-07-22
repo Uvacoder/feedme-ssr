@@ -1,11 +1,15 @@
 <script>
-  import Post from './Post.svelte';
-  export let posts = [];
+  import Post from '$lib/components/Post.svelte';
+  export let posts = null;
 </script>
 <div class="post-list">
-  {#each posts as post}
-  <Post {post} />
-  {/each}
+  {#if posts === null}
+    <h2>Loading...</h2>
+  {:else}
+    {#each posts as post}
+    <Post {post} />
+    {/each}
+  {/if}
 </div>
 
 <style>

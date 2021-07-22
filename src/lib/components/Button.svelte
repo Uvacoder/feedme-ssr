@@ -17,6 +17,7 @@
   export let href = '';
   export let order = 'reversed';
   export let image = '';
+  export let prefetch = false;
 
 </script>
 
@@ -45,7 +46,7 @@
     </span>
   </button>
 {:else}
-  <a href="{href}" class="button">
+  <a href="{href}" sveltekit:prefetch={prefetch} class="button">
     <span class="button-inner">
       {#if buttonStyle === 'icon'}
         <Icon name={iconName} />

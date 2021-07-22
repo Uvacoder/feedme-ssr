@@ -21,11 +21,16 @@
 </script>
 
 <script>
+  import { onMount, afterUpdate } from 'svelte';
   import { sortByPubDate } from '$lib/utils/sortByPubDate.js';
   import PostList from '$lib/components/PostList.svelte';
   export let data;
   export let error;
-  const posts = sortByPubDate(data.feed.items).map((item) => {
+
+  let posts;
+
+  function updatePosts() {
+    posts = sortByPubDate(data.feed.items).map((item) => {
     return {
       ...item,
       feedTitle: data.feed.title,
@@ -33,10 +38,21 @@
       feedLink: data.feed?.link,
     };
   });
+
+  // posts  = [...loadedPosts];
+  }
+
+  afterUpdate(() => {
+    updatePosts();
+  })
+
+  onMount(() => {
+    updatePosts();
+  });
 </script>
 
 {#if error}
 <h2>{error}</h2>
 {:else}
-<PostList {posts} />
+<PostList { posts } />
 {/if}
