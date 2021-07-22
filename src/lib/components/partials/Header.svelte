@@ -56,7 +56,7 @@
       {:else if $page.path === '/login'}
       <h2>Log In</h2>
       {:else}
-      <h2>{name}</h2>
+      <h2>{name || 'Error'}</h2>
       {/if}
     </div>
 

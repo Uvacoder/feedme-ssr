@@ -11,13 +11,19 @@ const parser = new Parser();
  * @returns array of data returned from all feeds in param array 
  */
 const getAllFeedsPosts = async (feedArray) => {
-  
   const allFeedsPromise = feedArray.map(async(feedItem) => {
-    return await parser.parseURL(feedItem.feed_link);
+    return {
+      name: feedItem.name,
+      feed: await parser.parseURL(feedItem.feed_link)
+    };
   });
   
   const feedsData = await Promise.allSettled(allFeedsPromise);
-  return feedsData.map((settledFeed) => settledFeed.value);
+  
+  return feedsData.map((settledFeed) => {
+    settledFeed.value.feed.title = settledFeed.value.name;
+    return settledFeed.value.feed;
+  });
 }
 
 
