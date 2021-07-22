@@ -78,7 +78,7 @@
   </div>
 
   <div class="sidebar-section">
-    <a href="/" aria-labelledby="page-label" id="brand">
+    <a href="/" sveltekit:prefetch aria-labelledby="page-label" id="brand">
       <Logo />
     </a>
   </div>
