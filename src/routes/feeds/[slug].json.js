@@ -9,14 +9,12 @@ export const get = async({params}) => {
   const singleFeed = await(getSingleFeed(slug));
 
   
-  const data = {
-    name: singleFeed.name,
-    feed: await parser.parseURL(singleFeed.feed_link)
-  };
+  const data = await parser.parseURL(singleFeed.feed_link);
 
-  data.feed.title = data.name || data.feed.title;
-
-  feed = {...data.feed};
+  const feed = {
+    ...data,
+    title: singleFeed.name
+  }
 
   return {
     body: {
