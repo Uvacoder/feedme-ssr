@@ -143,7 +143,9 @@
       justify-content: space-between;
     }
     .sidebar-section {
-      flex-basis: 20rem;
+      --width: calc(20rem - 1px);
+      flex-basis: var(--width);
+      width: var(--width);
       flex-grow: 1;
       border-bottom: none;
       border-right: 1px solid rgb(var(--primary-rgb), 0.5);
