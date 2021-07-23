@@ -1,9 +1,10 @@
 import supabase from '$lib/db.js';
 
 export const getAllPosts = async () => {
-  const { data, error } = await supabase()
+  const { data, error } = await supabase
     .from('posts')
-    .select();
+    .select('*')
+    .order('pubdate', {ascending: false});
 
   if(error) {
     return {
@@ -11,29 +12,53 @@ export const getAllPosts = async () => {
       error: new Error(error.message)
     }
   }
+  
   return data;
 };
 
-export const getPostsByFeed = async (feedId) => {
+export const getPostsByFeed = async (feedLink) => {
   const { data, error } = await supabase
     .from('posts')
-    .select('feed_id')
-    .eq(feedId);
+    .select('*')
+    .eq('feed_link', feedLink)
+    .order('pubdate', {ascending: false});
+
+    if(error) {
+      return {
+        ok: false,
+        error: new Error(error.message),
+      }
+    }
+
+    return data;
 };
 
-export const updatePosts = async (posts) => {
-  posts.forEach((post) =>{
+export const updatePosts = async (posts, feedName, feedLink, feedImage) => {
+  // console.log('posts passed to updatePosts fn: ', posts);
+  posts.forEach(async(post) =>{
+
+    const preppedPost = {
+      guid: post.guid ? post.guid : post.link,
+      title: post.title,
+      pubdate: post.pubDate,
+      creator: post.creator,
+      content: post["content:encoded"] ? post["content:encoded"] : post.content,
+      feed_link: feedLink,
+      feed_image: feedImage,
+      feed_name: feedName
+    }
+
     const { data, error } = await supabase
       .from('posts')
-      .upsert(post);
+      .upsert(preppedPost);
 
       if(error) {
+        console.error(error);
         return {
           ok: false,
           error: new Error(error.message)
         }
       }
-
       return data;
   });
 

@@ -27,9 +27,9 @@
   >
   <div class="post-header-summary">
     <div class="post-image">
-      {#if post.feedImage}
-      <a href={post.feedLink || ''} tabindex="-1">
-        <img src="{post.feedImage || ''}" alt="{post.feedTitle || ''}" class="feed-image" tabindex="-1">
+      {#if post.feed_image}
+      <a href={post.feed_link || ''} tabindex="-1">
+        <img src="{post.feed_image || ''}" alt="{post.feed_name || ''}" class="feed-image" tabindex="-1">
       </a>
       {/if}
     </div>
@@ -41,7 +41,7 @@
         </h2>
       </div>
       <div class="post-info">
-        <div class="post-meta"><a href="{post.feedLink || ''}" tabindex="-1">{post.feedTitle || ''}</a>: <time>{format(new Date(post.pubDate))}</time></div>
+        <div class="post-meta"><a href="{post.feed_link || ''}" tabindex="-1">{post.feed_name || ''}</a>: <time>{format(new Date(post.pubdate))}</time></div>
       </div>
     </div>
   </div>

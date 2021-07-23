@@ -27,8 +27,9 @@ export const getFeeds = async () => {
   const { data, error } = await supabase.from('feeds').select();
 
   if(error) {
-    if(error.status === 'Invalid authentication credentials') {
-      // do something!
+    return { 
+      ok: false,
+      error
     }
   }
 

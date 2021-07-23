@@ -1,7 +1,7 @@
+import { getAllPosts, getPostsByFeed, updatePosts } from '$lib/services/posts.service.js';
+import { getFeeds } from '$lib/services/feeds.service.js';
 import Parser from 'rss-parser';
-import { each } from 'svelte/internal';
 
-import supabase from '../../lib/db.js';
 
 const parser = new Parser();
 
@@ -11,30 +11,43 @@ const parser = new Parser();
  * @returns array of data returned from all feeds in param array 
  */
 const getAllFeedsPosts = async (feedArray) => {
-  const allFeedsPromise = feedArray.map(async(feedItem) => {
-    return {
-      name: feedItem.name,
-      feed: await parser.parseURL(feedItem.feed_link)
-    };
-  });
-  
-  const feedsData = await Promise.allSettled(allFeedsPromise);
-  
-  return feedsData.map((settledFeed) => {
-    settledFeed.value.feed.title = settledFeed.value.name || settledFeed.value.feed.title;
-    return settledFeed.value.feed;
-  });
+  const storedPosts = await getAllPosts();
+
+  if(storedPosts.length === 0) {
+
+    const allFeedsPromise = feedArray.map(async(feedItem) => {
+      return {
+        name: feedItem.name,
+        feed: await parser.parseURL(feedItem.feed_link)
+      };
+    });
+
+    const feedsData = await Promise.allSettled(allFeedsPromise);
+    
+    feedsData.map((settledFeed) => {
+      settledFeed.value.feed.title = settledFeed.value.name || settledFeed.value.feed.title;
+      const items = settledFeed.value.feed.items;
+      const feedUrl = settledFeed.value.feed.feedUrl;
+      const name = settledFeed.value.name;
+      const image = settledFeed.value.feed.image?.url;
+      
+      updatePosts(items, name, feedUrl, image);
+    });
+
+    getAllFeedsPosts(feedArray);
+  }
+  return storedPosts;
 }
 
 
-export async function get({params}) {
-  const { error, data } = await supabase.from('feeds').select();
+export async function get() {
+  const data = await getFeeds();
 
-  const allFeeds = await getAllFeedsPosts(data);
+  const allPosts = await getAllFeedsPosts(data);
 
   return {
     body: {
-      allFeeds
+      allPosts
     }
   }
 }

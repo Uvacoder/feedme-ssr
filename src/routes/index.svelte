@@ -3,9 +3,9 @@
     const response = await fetch('/feeds.json');
 
     const data = await response.json();
-        return {
+      return {
         props: {
-          feeds: data?.allFeeds
+          posts: data?.allPosts
         }
       }
   }
@@ -14,27 +14,7 @@
 <script>
   import { sortByPubDate } from '$lib/utils/sortByPubDate.js';
   import PostList from '$lib/components/PostList.svelte';
-  export let feeds;
-
-  
-  const combineFeedArrays = (feedArray) => {
-    let combined = [];
-    feedArray.forEach((feed) => {
-      feed.items.forEach((item) => {
-        combined.push(
-          {
-            ...item,
-            feedTitle: feed.title,
-            feedImage: feed.image?.url || '',
-            feedLink: feed?.link,
-          }
-          );
-      });
-    });
-    return combined;
-  };
-
-  const posts = sortByPubDate(combineFeedArrays(feeds));
+  export let posts;
 
 </script>
 
