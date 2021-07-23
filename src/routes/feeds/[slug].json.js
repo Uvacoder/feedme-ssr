@@ -11,13 +11,7 @@ export const get = async({params}) => {
 
   if(singleFeed) {
 
-    // const data = await parser.parseURL(singleFeed.feed_link);
     const data = await getPostsByFeed(singleFeed.name);
-    console.log(`${singleFeed.name}: `, data);
-    
-    // const feed = {
-    //   ...data,
-    // }
     
     return {
       body: {

@@ -28,7 +28,7 @@
   <div class="post-header-summary">
     <div class="post-image">
       {#if post.feed_image}
-      <a href={post.feed_link || ''} tabindex="-1">
+      <a href={post.guid || ''} tabindex="-1">
         <img src="{post.feed_image || ''}" alt="{post.feed_name || ''}" class="feed-image" tabindex="-1">
       </a>
       {/if}
@@ -41,7 +41,10 @@
         </h2>
       </div>
       <div class="post-info">
-        <div class="post-meta"><a href="{post.feed_link || ''}" tabindex="-1">{post.feed_name || ''}</a>: <time>{format(new Date(post.pubdate))}</time></div>
+        <div class="post-meta">
+          <a href="{post.guid || ''}" tabindex="-1">{post.feed_name || ''}</a>
+          <time>{format(new Date(post.pubdate))}</time>
+        </div>
       </div>
     </div>
   </div>
@@ -127,8 +130,8 @@
     display: flex;
     justify-content: center;
     align-items: start;
-    width: var(--space-700);
-    height: var(--space-700);
+    width: var(--space-600);
+    height: var(--space-600);
   }
   .post-meta {
     display: flex;
