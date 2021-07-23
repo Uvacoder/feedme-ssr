@@ -2,6 +2,7 @@
   export const load = async ({page, fetch, session, context}) => {
     const { slug } = page.params;
     const response = await fetch(`/feeds/${slug}.json`);
+
     if(!response.error) {
       return {
         props: {
@@ -13,7 +14,7 @@
       return {
         props: {
           data: {},
-          error: new Error(error), 
+          error: new Error(error),
         }
       }
     }
@@ -30,16 +31,7 @@
   let posts;
 
   function updatePosts() {
-    posts = sortByPubDate(data.feed.items).map((item) => {
-    return {
-      ...item,
-      feedTitle: data.feed.title,
-      feedImage: data.feed.image?.url || '',
-      feedLink: data.feed?.link,
-    };
-  });
-
-  // posts  = [...loadedPosts];
+    posts = [...data.data];
   }
 
   afterUpdate(() => {

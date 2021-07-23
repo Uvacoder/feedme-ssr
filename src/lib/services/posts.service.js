@@ -6,29 +6,19 @@ export const getAllPosts = async () => {
     .select('*')
     .order('pubdate', {ascending: false});
 
-  if(error) {
-    return {
-      ok: false,
-      error: new Error(error.message)
-    }
-  }
-  
+  if(error) throw error;
+
   return data;
 };
 
-export const getPostsByFeed = async (feedLink) => {
+export const getPostsByFeed = async (feedName) => {
   const { data, error } = await supabase
     .from('posts')
     .select('*')
-    .eq('feed_link', feedLink)
+    .eq('feed_name', feedName)
     .order('pubdate', {ascending: false});
 
-    if(error) {
-      return {
-        ok: false,
-        error: new Error(error.message),
-      }
-    }
+    if (error) throw error;
 
     return data;
 };
@@ -52,13 +42,8 @@ export const updatePosts = async (posts, feedName, feedLink, feedImage) => {
       .from('posts')
       .upsert(preppedPost);
 
-      if(error) {
-        console.error(error);
-        return {
-          ok: false,
-          error: new Error(error.message)
-        }
-      }
+      if(error) throw error;
+
       return data;
   });
 
