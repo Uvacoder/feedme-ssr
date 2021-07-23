@@ -33,6 +33,10 @@
     feedResponse.forEach((feed) => {
       $feeds[feed.slug] = feed;
     });
+
+    const updateResponse = await fetch('/update.json');
+
+    const updateData = await updateResponse.json();
   });
 
 </script>
