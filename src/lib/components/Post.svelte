@@ -1,11 +1,15 @@
 <script>
   import { fade } from 'svelte/transition';
   import {format} from 'timeago.js';
+  import { allPosts } from '$lib/stores/posts.store.js';
+  import { updateSinglePost } from '$lib/services/posts.service.js';
   import PostContent from './PostContent.svelte';
   import Icon from './Icon.svelte';
+
   export let post;
   let open = false;
-  let isRead = false;
+  $: isRead = post.read;
+  $: isFavorite = post.favorite;
 
   function handleToggle(event) {
     open = event.target.open;
@@ -14,24 +18,37 @@
 
   function readTimer() {
     setTimeout(() => {
-      isRead = true;
+      post.read = true;
+      updateSinglePost(post);
     }, 2000);
+  }
+
+  function toggleFavorite() {
+    post.favorite = !post.favorite;
+    $allPosts[post.guid] = {...post};
+    updateSinglePost(post);
   }
 </script>
 
 
-<details class="post" on:toggle={handleToggle}>
+<details class="post" on:toggle={handleToggle} class:read={isRead}>
   <summary 
     class="post-header" 
     aria-label="{post.title || ''}. Press space or click to open content."
   >
   <div class="post-header-summary">
-    <div class="post-image">
-      {#if post.feed_image}
-      <a href={post.guid || ''} tabindex="-1">
-        <img src="{post.feed_image || ''}" alt="{post.feed_name || ''}" class="feed-image" tabindex="-1">
-      </a>
-      {/if}
+    <div class="post-aside">
+
+      <div class="post-image">
+        {#if post.feed_image}
+        <a href={post.guid || ''} tabindex="-1">
+          <img src="{post.feed_image || ''}" alt="{post.feed_name || ''}" class="feed-image" tabindex="-1">
+        </a>
+        {/if}
+      </div>
+      <div class="post-control-icon {isFavorite ? 'favorite' : ''}" on:click|stopPropagation={toggleFavorite}>
+        <Icon name={isFavorite ? "starfilled" : "star"} size="1.5" />
+      </div>
     </div>
     <div class="post-header-content">
       <div class="post-header-control">
@@ -53,8 +70,8 @@
 <PostContent content={post["content:encoded"] || post.content} />
 
 <div class="post-control-icons" transition:fade>
-  <div class="post-control-icon">
-    <Icon name="star" size="1.5"/>
+  <div class="post-control-icon {isFavorite ? 'favorite' : ''}" on:click={toggleFavorite}>
+    <Icon name={isFavorite ? "starfilled" : "star"} size="1.5"/>
   </div>
   <div class="post-control-icon">
     <Icon name="tag" size="1.5"/>
@@ -126,6 +143,12 @@
     height: 0;
     overflow: hidden; */
   }
+  .post-aside {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
   .feed-image {
     display: flex;
     justify-content: center;
@@ -152,8 +175,19 @@
     justify-content: space-around;
     /* max-width: 40rem; */
   }
+
+  .post-control-icon {
+    cursor: pointer;
+  }
   .post-control-icon:hover {
     color: var(--primary-light);
+  }
+
+  .read > .post-header {
+    color: rgb(var(--light-rgb), 0.8);
+  }
+  .favorite {
+    color: var(--accent-secondary);
   }
   time {
     font-family: var(--sans);

@@ -48,3 +48,15 @@ export const updatePosts = async (posts, feedName, feedLink, feedImage) => {
   });
 
 }
+
+export const updateSinglePost = async(post) => {
+  const { data, error } = await supabase
+    .from('posts')
+    .upsert(post)
+
+  if(error) {
+    console.error(error);
+  }
+
+  console.log(data);
+}
