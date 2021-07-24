@@ -6,7 +6,9 @@
   import { goto } from '$app/navigation';
   import { authed } from '$lib/stores/user.store.js';
   import { feeds } from '$lib/stores/feeds.store.js';
+  import { loadedPosts, allPosts } from '$lib/stores/posts.store.js';
   import { getFeeds } from '$lib/services/feeds.service.js';
+  import { getAllPosts } from '$lib/services/posts.service.js';
 
   import Sidebar from '$lib/components/partials/Sidebar.svelte';
   import Header from '$lib/components/partials/Header.svelte';
@@ -27,16 +29,38 @@
   //   goto('/');
   // }
 
+  const updateStorePosts = async() => {
+    try {
+      const storedPosts = await getAllPosts();
+
+      $loadedPosts = [...storedPosts]
+
+      storedPosts.forEach((post) => {
+        $allPosts[post.guid] = post;
+      });
+    } catch(error) {
+      console.error(error);
+    } finally {
+      console.log($allPosts);
+    }
+  }
+
   onMount(async() => {
-    const feedResponse = await getFeeds();
-
-    feedResponse.forEach((feed) => {
-      $feeds[feed.slug] = feed;
-    });
-
-    const updateResponse = await fetch('/update.json');
-
-    const updateData = await updateResponse.json();
+    try {
+      const feedResponse = await getFeeds();
+      
+      feedResponse.forEach((feed) => {
+        $feeds[feed.slug] = feed;
+      });
+      
+      const updateResponse = await fetch('/update.json');
+      
+      const updateData = await updateResponse.json();
+    } catch(error) {
+      console.error(error);
+    } finally {
+      updateStorePosts();
+    }
   });
 
 </script>

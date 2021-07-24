@@ -12,10 +12,9 @@
 </script>
 
 <script>
-  import { sortByPubDate } from '$lib/utils/sortByPubDate.js';
+  import { allPosts } from '$lib/stores/posts.store.js';
   import PostList from '$lib/components/PostList.svelte';
   export let posts;
-
 </script>
 
-<PostList {posts} />
+<PostList posts={Object.values($allPosts)} />

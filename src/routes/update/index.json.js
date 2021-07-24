@@ -42,19 +42,24 @@ const getPostsFromRSS = async (feedArray) => {
 }
 
 export const get = async() => {
-  const data = await getFeeds();
+  try {
 
-  const allPosts = await updateAllFeedPosts(data);
+    const data = await getFeeds();
+    
+    const allPosts = await updateAllFeedPosts(data);
 
-  if(!allPosts.ok) {
-    console.error(allPosts.error);
-  } else {
-    console.log(allPosts.data);
-  }
+    console.log('allPosts in /update', allPosts);
 
-  return {
-    body: {
-      data: 'Success updating db with latest posts',
+    return {
+      body: {
+        data: 'Success updating db with latest posts',
+      }
+    }
+  } catch(e) {
+    return {
+      ok: false,
+      error: e
     }
   }
+
 }
