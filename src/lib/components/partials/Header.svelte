@@ -103,13 +103,10 @@
     align-items: center;
     height: var(--ui-header-height);
   }
-
-  .main-section, .sidebar-section {
-    padding: 1rem;
-  }
   .main-section {
     display: flex;
     order: 2;
+    padding: 1rem 2rem;
     justify-content: space-between;
     flex-basis: 0;
     flex-grow: 999;
@@ -120,6 +117,7 @@
     align-items: flex-start;
     order: 1;
     border-bottom: 1px solid rgb(var(--primary-rgb), 0.5);
+    padding: 1rem;
   }
   .title {
     order: 1;
@@ -149,7 +147,7 @@
       width: var(--width);
       flex-grow: 1;
       border-bottom: none;
-      border-right: 1px solid rgb(var(--primary-rgb), 0.5);
+      /* border-right: 1px solid rgb(var(--primary-rgb), 0.5); */
     }
   }
 </style>
