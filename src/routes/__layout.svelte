@@ -96,13 +96,12 @@
     position: fixed;
     top: calc((var(--ui-header-height) * 2) - 0.75rem);
     left: 0;
-    /* width: 100vw; */
     order: 1;
     border-inline-end: 1px solid rgb(var(--primary-rgb), 0.5);
+    padding: 0.5rem;
     display: flex;
     flex-direction: column;
     z-index: 100;
-    /* pointer-events: none; */
   }
 
   :global(#sidebar > .sidebar-menu), :global(#sidebar > .menu-button) {

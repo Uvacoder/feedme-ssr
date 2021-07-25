@@ -103,8 +103,9 @@
     align-items: center;
     height: var(--ui-header-height);
   }
+
   .main-section, .sidebar-section {
-    padding: 0.5rem;
+    padding: 1rem;
   }
   .main-section {
     display: flex;

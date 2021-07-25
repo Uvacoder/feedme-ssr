@@ -61,7 +61,7 @@
   --light-rgb: 230, 249, 255;
 
   /* Level-2 Variables */
-  --ui-header-height: 3.5rem;
+  --ui-header-height: 5rem;
   --input-background: var(--dark);
 }
 
