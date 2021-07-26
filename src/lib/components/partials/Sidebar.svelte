@@ -9,7 +9,7 @@
 
   <ul class="sidebar-menu">
     <li class="sidebar-menu-item">
-      <Button buttonType="link" prefetch="true" buttonStyle="iconText" iconName="listSettings" href="/settings" title="Customize Feeds" />
+      <Button buttonType="link" prefetch="true" buttonStyle="iconText" iconName="listSettings" href="/settings" title="Edit Feeds" />
     </li>
 
     <li class="sidebar-menu-item">

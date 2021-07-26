@@ -79,7 +79,7 @@
 
   <div class="sidebar-section">
     <a href="/" sveltekit:prefetch aria-labelledby="page-label" id="brand">
-      <Logo />
+      <Logo scale="2"/>
     </a>
   </div>
 
@@ -100,7 +100,6 @@
   }
 
   header > * {
-    align-items: center;
     height: var(--ui-header-height);
   }
   .main-section {
@@ -108,13 +107,15 @@
     order: 2;
     padding: 1rem 2rem;
     justify-content: space-between;
+    align-items: center;
     flex-basis: 0;
     flex-grow: 999;
     min-width: 50%;
   }
   .sidebar-section {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
     order: 1;
     border-bottom: 1px solid rgb(var(--primary-rgb), 0.5);
     padding: 1rem;

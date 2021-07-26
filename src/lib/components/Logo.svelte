@@ -18,4 +18,8 @@
 </div>
 
 <style>
+  .logo svg {
+    max-width: 100%;
+    height: auto;
+  }
 </style>
